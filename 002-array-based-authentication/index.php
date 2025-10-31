@@ -1,10 +1,15 @@
 <?php
+// logout section
+session_start();
+if (isset($_GET['logout'])) {
+    unset($_SESSION['user_data']);
+}
+
 // main variables
 $user_logged = null;
 $user_not_logged = null;
 
 // session management
-session_start();
 if (isset($_SESSION['user_data'])) {
     $user_logged = true;
 }
@@ -48,6 +53,7 @@ if (isset($_POST['submit'])) {
             <div class="logged-in-user">
                 <img src="<?php echo $_SESSION['user_data']['avatar'] ?>" alt="<?php echo $_SESSION['user_data']['name'] ?>">
                 <?php echo $_SESSION['user_data']['name'] ?> عزیز، شما با موفقیت وارد شدید
+                <a href="?logout=true">خروج از حساب کاربری</a>
             </div>
         <?php else: /* isset($user_logged) */ ?>
             <a href="https://daneshjooyar.com/php-tutorial/" class="course-url">
