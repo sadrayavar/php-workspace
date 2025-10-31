@@ -1,9 +1,15 @@
 <?php
-if (isset($_POST['submit'])) {
-    // main variables
-    $user_logged = null;
-    $user_not_logged = null;
+// main variables
+$user_logged = null;
+$user_not_logged = null;
 
+// session management
+session_start();
+if (isset($_SESSION['user_data'])) {
+    $user_logged = true;
+}
+
+if (isset($_POST['submit'])) {
     // credentials
     $username = $_POST['username'];
     $password = $_POST['password'];
@@ -12,11 +18,11 @@ if (isset($_POST['submit'])) {
     $users = include('simple-login-form-users.php');
 
     // get user index
-    $user_index;
     foreach ($users as $i => $user) {
         if ($username === $user['username'] && $password === $user['password']) {
+            // session management
+            $_SESSION['user_data'] = $user;
             $user_logged = true;
-            $user_index = $i;
             break;
         }
     }
@@ -40,10 +46,10 @@ if (isset($_POST['submit'])) {
     <div class="container">
         <?php if (isset($user_logged)): ?>
             <div class="logged-in-user">
-                <img src="<?php echo $users[$user_index]['avatar'] ?>" alt="<?php echo $users[$user_index]['name'] ?>">
-                <?php echo $users[$user_index]['name'] ?> عزیز، شما با موفقیت وارد شدید
+                <img src="<?php echo $_SESSION['user_data']['avatar'] ?>" alt="<?php echo $_SESSION['user_data']['name'] ?>">
+                <?php echo $_SESSION['user_data']['name'] ?> عزیز، شما با موفقیت وارد شدید
             </div>
-        <?php else: /* isset($user_index) */ ?>
+        <?php else: /* isset($user_logged) */ ?>
             <a href="https://daneshjooyar.com/php-tutorial/" class="course-url">
                 <img src="images/daneshjooyar-logo.svg" alt="Daneshjooyar" width="145" height="59">
             </a>
