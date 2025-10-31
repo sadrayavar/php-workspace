@@ -1,5 +1,8 @@
 <?php
 if (isset($_POST['submit'])) {
+    // main variables
+    $user_logged = null;
+    $user_not_logged = null;
 
     // credentials
     $username = $_POST['username'];
@@ -12,9 +15,13 @@ if (isset($_POST['submit'])) {
     $user_index;
     foreach ($users as $i => $user) {
         if ($username === $user['username'] && $password === $user['password']) {
+            $user_logged = true;
             $user_index = $i;
             break;
         }
+    }
+    if (!isset($user_logged)) {
+        $user_not_logged = true;
     }
 }
 ?>
@@ -31,7 +38,7 @@ if (isset($_POST['submit'])) {
 
 <body>
     <div class="container">
-        <?php if (isset($user_index)): ?>
+        <?php if (isset($user_logged)): ?>
             <div class="logged-in-user">
                 <img src="<?php echo $users[$user_index]['avatar'] ?>" alt="<?php echo $users[$user_index]['name'] ?>">
                 <?php echo $users[$user_index]['name'] ?> عزیز، شما با موفقیت وارد شدید
@@ -67,12 +74,12 @@ if (isset($_POST['submit'])) {
                 </p>
                 <button name="submit">ورود به حساب کاربری</button>
             </form>
-            <?php if (isset($_POST['submit'])): ?>
-                <div class="result error">
-                    ورود ناموفق
-                </div>
-            <?php endif; /* isset($_POST['submit']) */ ?>
-        <?php endif; /* isset($user_index) */ ?>
+        <?php endif; /* isset($user_logged) */ ?>
+        <?php if (isset($user_not_logged)): ?>
+            <div class="result error">
+                ورود ناموفق
+            </div>
+        <?php endif; /* isset($user_not_logged) */ ?>
     </div>
     <script>
         let show_password = false;
