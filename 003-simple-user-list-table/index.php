@@ -45,8 +45,8 @@
                         <th scope="col">نام خانوادگی</th>
                         <th scope="col">تلفن</th>
                         <th scope="col">
-                            <a href="#" class="order">
-                                سن
+                            <a href="?<?php echo "page=$current_page" ?>&sort=<?php echo $sortOrder === "صعودی" ? "نزولی" : "صعودی" ?>" class="order">
+                                سن <?php echo $sortOrder ? "(" . $sortOrder . ")" : "" ?>
                             </a>
                         </th>
                         <th scope="col">وضعیت</th>
@@ -71,11 +71,11 @@
             <nav>
                 <ul class="pagination">
                     <li class="page-item<?php echo $current_page === 1 ? " disabled" : "" ?>">
-                        <a class="page-link" href="?page=<?php echo $current_page - 1 ?>">Previous</a>
+                        <a class="page-link" href="?page=<?php echo $current_page - 1 ?>&<?php echo "sort=$sortOrder" ?>">Previous</a>
                     </li>
 
                     <?php if ($current_page !== 1): ?>
-                        <li class="page-item"><a class="page-link" href="?page=<?php echo $current_page - 1 ?>"><?php echo $current_page - 1 ?></a></li>
+                        <li class="page-item"><a class="page-link" href="?page=<?php echo $current_page - 1 ?>&<?php echo "sort=$sortOrder" ?>"><?php echo $current_page - 1 ?></a></li>
                     <?php endif; ?>
 
                     <li class="page-item active" aria-current="page">
@@ -83,11 +83,11 @@
                     </li>
 
                     <?php if ($current_page !== $last_page): ?>
-                        <li class="page-item"><a class="page-link" href="?page=<?php echo $current_page + 1 ?>"><?php echo $current_page + 1 ?></a></li>
+                        <li class="page-item"><a class="page-link" href="?page=<?php echo $current_page + 1 ?>&<?php echo "sort=$sortOrder" ?>"><?php echo $current_page + 1 ?></a></li>
                     <?php endif; ?>
 
                     <li class="page-item<?php echo $current_page === $last_page ? " disabled" : "" ?>">
-                        <a class="page-link" href="?page=<?php echo $current_page + 1 ?>">Next</a>
+                        <a class="page-link" href="?page=<?php echo $current_page + 1 ?>&<?php echo "sort=$sortOrder" ?>">Next</a>
                     </li>
                 </ul>
             </nav>

@@ -4,6 +4,16 @@
 $users = include 'data.php';
 const USER_NUM_IN_PAGE = 2;
 
+// sort data
+$sortOrder = isset($_GET['sort']) ? $_GET['sort'] : 'نزولی';
+usort(
+	$users,
+	function ($arr, $usort) use ($sortOrder) {
+		$is_descend = $sortOrder === "نزولی" ? -1 : 1;
+		return $is_descend * ($arr['age'] <=> $usort['age']);
+	}
+);
+
 // pagination navigation
 $current_page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
 $last_page = (int) ceil(count($users) / USER_NUM_IN_PAGE);
