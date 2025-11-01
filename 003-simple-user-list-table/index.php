@@ -53,36 +53,18 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>حامد</td>
-                        <td>مودی</td>
-                        <td>09123456789</td>
-                        <td>32</td>
-                        <td>
-                            <span class="badge text-bg-success">فعال</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>علی</td>
-                        <td>رمضانی</td>
-                        <td>09123456789</td>
-                        <td>32</td>
-                        <td>
-                            <span class="badge text-bg-danger">غیرفعال</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td>حسن</td>
-                        <td>رجبیان</td>
-                        <td>09123456789</td>
-                        <td>32</td>
-                        <td>
-                            <span class="badge text-bg-danger">غیرفعال</span>
-                        </td>
-                    </tr>
+                    <?php foreach ($page_users as $index => $user): ?>
+                        <tr>
+                            <th scope="row"><?php echo (USER_NUM_IN_PAGE * $current_page) + $index + 1 - USER_NUM_IN_PAGE ?></th>
+                            <td><?php echo $user['name'] ?></td>
+                            <td><?php echo $user['family'] ?></td>
+                            <td><?php echo $user['phone'] ?></td>
+                            <td><?php echo $user['age'] ?></td>
+                            <td>
+                                <span class="badge text-bg-success"><?php echo $user['status'] === "active" ? "فعال" : "غیرفعال" ?></span>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
                 </tbody>
             </table>
 
@@ -111,7 +93,6 @@
             </nav>
 
         </div>
-
     </div>
 </body>
 
