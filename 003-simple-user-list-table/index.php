@@ -22,15 +22,16 @@
                 <div class="col-3">
                     <div class="form-group">
                         <label for="search">جستجو</label>
-                        <input type="search" name="search" class="form-control" id="search">
+                        <input type="search" name="search" class="form-control" id="search" value="<?php echo $filter_search ?>">
                     </div>
                 </div>
                 <div class="col-3">
                     <div class="form-group">
                         <label for="status">وضعیت</label>
                         <select name="status" id="status" class="form-control">
-                            <option value="active">فعال</option>
-                            <option value="inactive">غیر فعال</option>
+                            <option value="all" <?php echo $filter_status === "all" ? "selected" : "" ?>>همه</option>
+                            <option value="active" <?php echo $filter_status === "active" ? "selected" : "" ?>>فعال</option>
+                            <option value="inactive" <?php echo $filter_status === "inactive" ? "selected" : "" ?>>غیر فعال</option>
                         </select>
                     </div>
                 </div>
