@@ -15,7 +15,10 @@
     <div class="container">
         <div class="table-container">
 
-            <div class="table-filters mb-4 row">
+            <form class="table-filters mb-4 row">
+                <input type="hidden" name="page" value="<?php echo $current_page ?>">
+                <input type="hidden" name="sortOrder" value="<?php echo $sortOrder ?>">
+
                 <div class="col-3">
                     <div class="form-group">
                         <label for="search">جستجو</label>
@@ -33,9 +36,9 @@
                 </div>
                 <div class="col-3">
                     <br>
-                    <button class="btn btn-primary">اعمال فیلتر</button>
+                    <button type="submit" class="btn btn-primary">اعمال فیلتر</button>
                 </div>
-            </div><!--.table-filters-->
+            </form><!--.table-filters-->
 
             <table class="table table-hover table-striped table-responsive">
                 <thead>

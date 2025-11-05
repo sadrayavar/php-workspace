@@ -6,7 +6,6 @@ function generate_querystring($key, $value)
 	$queries[$key] = $value;
 	ksort($queries);
 
-	
 	// generate new querystring
 	$querystring = "?";
 	foreach ($queries as $key => $value) {
