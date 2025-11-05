@@ -49,8 +49,8 @@
                         <th scope="col">نام خانوادگی</th>
                         <th scope="col">تلفن</th>
                         <th scope="col">
-                            <a href="<?php echo generate_querystring("sortOrder", ($sortOrder === "صعودی" ? "نزولی" : "صعودی")) ?>" class="order">
-                                سن <?php echo $sortOrder ? "($sortOrder)" : "" ?>
+                            <a href="<?php echo generate_querystring("sortOrder", ($sortOrder === "صعودی" ? "نزولی" : "صعودی")) ?>" class="order<?php echo $sortOrder === "صعودی" ? " asc" : "" ?><?php echo $sortOrder === "نزولی" ? " desc" : "" ?>">
+                                سن
                             </a>
                         </th>
                         <th scope="col">وضعیت</th>
@@ -69,6 +69,13 @@
                             </td>
                         </tr>
                     <?php endforeach; ?>
+                    <?php if (!count($page_users)): ?>
+                        <tr>
+                            <td colspan="6">
+                                هیچ نتیجه ای یافت نشد!
+                            </td>
+                        </tr>
+                    <?php endif; ?>
                 </tbody>
             </table>
 
@@ -78,17 +85,15 @@
                         <a class="page-link" href="<?php echo generate_querystring("page", $current_page - 1) ?>">Previous</a>
                     </li>
 
-                    <?php if ($current_page !== 1): ?>
-                        <li class="page-item"><a class="page-link" href="<?php echo generate_querystring("page", $current_page - 1) ?>"><?php echo $current_page - 1 ?></a></li>
-                    <?php endif; ?>
-
-                    <li class="page-item active" aria-current="page">
-                        <span class="page-link"><?php echo $current_page ?></span>
-                    </li>
-
-                    <?php if ($current_page !== $last_page): ?>
-                        <li class="page-item"><a class="page-link" href="<?php echo generate_querystring("page", $current_page + 1) ?>"><?php echo $current_page + 1 ?></a></li>
-                    <?php endif; ?>
+                    <?php for ($i = 1; $i <= $last_page; $i++): ?>
+                        <?php if ($i === $current_page): ?>
+                            <li class="page-item active" aria-current="page">
+                                <span class="page-link"><?php echo $i ?></span>
+                            </li>
+                        <?php else: ?>
+                            <li class="page-item"><a class="page-link" href="<?php echo generate_querystring("page", $i) ?>"><?php echo $i ?></a></li>
+                        <?php endif; ?>
+                    <?php endfor; ?>
 
                     <li class="page-item<?php echo $current_page === $last_page ? " disabled" : "" ?>">
                         <a class="page-link" href="<?php echo generate_querystring("page", $current_page + 1) ?>">Next</a>
