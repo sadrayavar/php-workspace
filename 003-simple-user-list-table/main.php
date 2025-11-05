@@ -1,11 +1,14 @@
 <?php
 
+// includes
+include "generate_querystring.php";
+
 // global data
 $users = include 'data.php';
 const USER_NUM_IN_PAGE = 2;
 
-// sort data
-$sortOrder = isset($_GET['sort']) ? $_GET['sort'] : 'نزولی';
+// sort data 
+$sortOrder = isset($_GET['sortOrder']) ? $_GET['sortOrder'] : 'نزولی';
 usort(
 	$users,
 	function ($arr, $usort) use ($sortOrder) {
@@ -22,5 +25,5 @@ $last_page = (int) ceil(count($users) / USER_NUM_IN_PAGE);
 $current_page = $current_page > $last_page ? $last_page : $current_page;
 $current_page = $current_page < 1 ? 1 : $current_page;
 
-// pagination data
+// paginate data
 $page_users = array_slice($users, ($current_page - 1) * USER_NUM_IN_PAGE, USER_NUM_IN_PAGE);
