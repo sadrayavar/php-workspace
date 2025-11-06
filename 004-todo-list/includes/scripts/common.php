@@ -15,3 +15,9 @@ function generate_querystring($key, $value)
 
 	return $querystring;
 }
+
+function redirect($url)
+{
+	header("Location: $url");
+	exit;
+}

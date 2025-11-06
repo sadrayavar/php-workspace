@@ -1,15 +1,12 @@
 <?php
+include("includes/scripts/common.php");
+
 session_start();
-if (isset($_SESSION['user'])) {
-    // get username and password from session
-    $user_on_session = unserialize($_SESSION['user']);
-    $username = $user_on_session['username'];
-    $password = $user_on_session['password'];
-} else if (isset($_COOKIE['user'])) {
-    // get username and password from session
-    $user_on_cookie = unserialize($_COOKIE['user']);
-    $username = $user_on_cookie['username'];
-    $password = $user_on_cookie['password'];
+if (isset($_SESSION['user']) || isset($_COOKIE['user'])) {
+    // get username and password from session or cookie
+    $saved_credentials = unserialize(isset($_SESSION['user']) ? $_SESSION['user'] : $_COOKIE['user']);
+    $username = $saved_credentials['username'];
+    $password = $saved_credentials['password'];
 } else if (isset($_GET['login_pushed'])) {
     // get username and password from form
     $username = $_GET['username'];
@@ -44,12 +41,7 @@ if (isset($credential_ok) && $credential_ok) {
     }
 
     // redirect to index page
-    sleep(0.5);
-    $protocol = $_SERVER["REQUEST_SCHEME"];
-    $domain = $_SERVER['HTTP_HOST'];
-    $uri = explode("/", $_SERVER['REQUEST_URI'])[1];
-    header("Location: $protocol://$domain/$uri");
-    exit;
+    redirect('index.php');
 }
 ?>
 <!DOCTYPE html>
