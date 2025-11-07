@@ -1,6 +1,5 @@
 <?php
-include('includes/scripts/common.php');
-session_start();
+include('includes/init.php');
 
 // logout user
 if (isset($_GET['logout']) && $_GET['logout'] === "true") {

@@ -1,7 +1,6 @@
 <?php
-include("includes/scripts/common.php");
+include('includes/init.php');
 
-session_start();
 if (isset($_SESSION['user']) || isset($_COOKIE['user'])) {
     // get username and password from session or cookie
     $saved_credentials = unserialize(isset($_SESSION['user']) ? $_SESSION['user'] : $_COOKIE['user']);
