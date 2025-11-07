@@ -25,7 +25,7 @@ function read_task()
 
 	// create file if there is none
 	if (!file_exists($path)) {
-		file_put_contents($path, "");
+		create_task_file($path);
 		return [];
 	}
 
@@ -47,10 +47,21 @@ function get_task_file_path()
 }
 function create_task_file($path)
 {
-	// check for access
-	if (!is_writable('tasks/')) {
+	// get folder path
+	$folder_path = explode("/", $path);
+	array_pop($folder_path);
+	$folder_path = implode("/", $folder_path);
+
+	// check for folder access
+	if (!is_writable($folder_path)) {
 		return false;
 	}
 
-	return file_put_contents($path, "");
+	// create folder if it doesnt exist
+	if (!file_exists($folder_path)) {
+		mkdir(directory: $folder_path, recursive: true);
+	}
+
+	// create file
+	return file_put_contents($path, "",);
 }
