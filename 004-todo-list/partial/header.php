@@ -13,8 +13,8 @@ if (!isset($_SESSION['user']) and !isset($_COOKIE['user'])) {
 	redirect('login.php');
 }
 
-$temp = explode('/', $_SERVER['REQUEST_URI'])[2];
-switch ($temp) {
+$page = explode('/', $_SERVER['REQUEST_URI'])[2];
+switch ($page) {
 	case 'change-password.php':
 		$page_title = 'تغییر رمز عبور';
 		break;

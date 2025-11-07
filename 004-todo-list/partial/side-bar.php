@@ -1,18 +1,22 @@
+<?php
+$user_data = isset($_COOKIE['user']) ? $_COOKIE['user'] : $_SESSION['user'];
+$user_data = unserialize($user_data);
+?>
 <aside class="sidebar">
 	<a href="https://dnjy.ir/php" class="panel-logo align-center">
 		<img src="images/logo-light.svg" class="login-logo" alt="Daneshjooyar" width="145" height="59">
 	</a>
 	<div class="profile align-center">
-		<img src="images/hamedmoody.jpg" alt="Hamed" width="256" height="256">
+		<img src="<?php echo $user_data['avatar'] ?>" alt="Hamed" width="256" height="256">
 		<p class="user-full-name">
-			حامد مودی
+			<?php echo $user_data['name'] ?>
 		</p>
 		<p class="user-phone">
-			09123456789
+			<?php echo $user_data['phone'] ?>
 		</p>
 	</div>
 	<nav class="menu">
-		<a href="index.php" class="active">
+		<a href="index.php" class="<?php echo $page === "index.php" ? "active" : "" ?>">
 			<svg xmlns="http://www.w3.org/2000/svg" width="21.5" height="20.969" viewBox="0 0 21.5 20.969">
 				<g id="house" transform="translate(-1.25 -1.781)">
 					<path id="Path_60" data-name="Path 60" d="M22,22.75H2a.75.75,0,0,1,0-1.5H22a.75.75,0,0,1,0,1.5Z" fill="#fff" />
@@ -26,7 +30,7 @@
 			</svg>
 			پیشخوان
 		</a>
-		<a href="tasklist.php">
+		<a href="tasklist.php" class="<?php echo $page === "tasklist.php" ? "active" : "" ?>">
 			<svg xmlns="http://www.w3.org/2000/svg" width="19.5" height="18.5" viewBox="0 0 19.5 18.5">
 				<g id="task" transform="translate(-2.25 -2.75)">
 					<path id="Path_67" data-name="Path 67" d="M21,20.25H11a.75.75,0,0,1,0-1.5H21a.75.75,0,0,1,0,1.5Z" fill="#fff" />
