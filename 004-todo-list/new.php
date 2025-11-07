@@ -1,5 +1,22 @@
 <?php include("partial/header.php") ?>
 <?php include("partial/side-bar.php") ?>
+<?php
+
+// get task data from form
+if (isset($_POST['save_task'])) {
+    $task_data = [
+        "title" => $_POST["title"],
+        "status" => $_POST["status"],
+        "progress" => $_POST["progress"],
+        "date" => $_POST["date"],
+    ];
+
+    create_task(...$task_data);
+}
+
+
+
+?>
 <main>
     <h1>ثبت کار جدید</h1>
     <div class="message error">
@@ -24,38 +41,38 @@
             ویرایش با موفقیت انجام شد
         </p>
     </div><!--.message-->
-    <form action="" class="row">
+    <form action="" class="row" method="post">
         <div class="col col-12">
             <div class="form-group">
                 <label for="title">نام کار</label>
-                <input type="text" class="form-control" id="title" name="title">
+                <input type="text" class="form-control" id="title" name="title" value="<?php echo $task_data['title'] ?? "" ?>">
             </div>
         </div>
         <div class="col col-4">
             <div class="form-group">
                 <label for="status">وضعیت</label>
                 <select name="status" id="status" class="form-control">
-                    <option value="queue">در صف انجام</option>
-                    <option value="doing">در حال انجام</option>
-                    <option value="done">انجام شده</option>
-                    <option value="expire">منقضی شده</option>
+                    <option value="queue" <?php echo isset($task_data['status']) && $task_data['status'] === "queue" ? "selected" : "" ?>>در صف انجام</option>
+                    <option value="doing" <?php echo isset($task_data['status']) && $task_data['status'] === "doing" ? "selected" : "" ?>>در حال انجام</option>
+                    <option value="done" <?php echo isset($task_data['status']) && $task_data['status'] === "done" ? "selected" : "" ?>>انجام شده</option>
+                    <option value="expire" <?php echo isset($task_data['status']) && $task_data['status'] === "expire" ? "selected" : "" ?>>منقضی شده</option>
                 </select>
             </div>
         </div>
         <div class="col col-4">
             <div class="form-group">
                 <label for="progress">درصد پیشرفت</label>
-                <input type="number" min="0" max="100" step="1" class="form-control" id="progress" name="progress" value="0">
+                <input type="number" min="0" max="100" step="1" class="form-control" id="progress" name="progress" value="<?php echo $task_data['progress'] ?? "0" ?>">
             </div>
         </div>
         <div class="col col-4">
             <div class="form-group">
                 <label for="date">مهلت زمانی</label>
-                <input type="text" min="0" max="100" step="1" class="form-control date-field" id="date" name="date">
+                <input type="text" min="0" max="100" step="1" class="form-control date-field" id="date" name="date" value="<?php echo $task_data['date'] ?? "" ?>">
             </div>
         </div>
         <div class="col col-12">
-            <button class="btn btn-primary">
+            <button class="btn btn-primary" name="save_task">
                 ذخیره کار
             </button>
         </div>
