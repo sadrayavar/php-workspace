@@ -1,6 +1,5 @@
 <?php
-$user_data = isset($_COOKIE['user']) ? $_COOKIE['user'] : $_SESSION['user'];
-$user_data = unserialize($user_data);
+$user_data = read_user();
 ?>
 <aside class="sidebar">
 	<a href="https://dnjy.ir/php" class="panel-logo align-center">

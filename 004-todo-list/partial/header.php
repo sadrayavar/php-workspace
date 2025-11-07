@@ -1,10 +1,9 @@
 <?php
 include('includes/init.php');
 
-// logout user
+// logout user if flag is set
 if (isset($_GET['logout']) && $_GET['logout'] === "true") {
-	setcookie('user', '', 1);
-	unset($_SESSION['user']);
+	logout_user();
 }
 
 // redirect to login page if user is not logged in

@@ -14,18 +14,7 @@ if (isset($_SESSION['user']) || isset($_COOKIE['user'])) {
 
 // check credentials
 if (isset($username)) {
-    $users = include "includes/simple-login-form-users.php";
-    $credential_ok;
-    foreach ($users as $user) {
-        if ($username === $user['username'] && $password === $user['password']) {
-            $credential_ok = true;
-            $this_user = $user;
-            break;
-        }
-    }
-    if (!isset($credential_ok)) {
-        $credential_ok = false;
-    }
+    $credential_ok = is_credential_ok($username, $password);
 }
 
 // procede if credentials are correct
