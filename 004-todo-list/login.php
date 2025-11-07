@@ -7,10 +7,10 @@ if (isset($_SESSION['user']) || isset($_COOKIE['user'])) {
     $saved_credentials = unserialize(isset($_SESSION['user']) ? $_SESSION['user'] : $_COOKIE['user']);
     $username = $saved_credentials['username'];
     $password = $saved_credentials['password'];
-} else if (isset($_GET['login_pushed'])) {
+} else if (isset($_POST['login_pushed'])) {
     // get username and password from form
-    $username = $_GET['username'];
-    $password = $_GET['password'];
+    $username = $_POST['username'];
+    $password = $_POST['password'];
 }
 
 // check credentials
@@ -69,7 +69,7 @@ if (isset($credential_ok) && $credential_ok) {
                 </p>
             </div><!--.message-->
         <?php endif; ?>
-        <form action="login.php">
+        <form action="login.php" method="post">
             <h1>ورود به سایت</h1>
             <div class="form-group">
                 <label for="username">نام کاربری</label>
