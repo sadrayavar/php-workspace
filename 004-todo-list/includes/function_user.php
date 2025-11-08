@@ -28,11 +28,6 @@ function create_user($username, $password, $name, $family, $phone, $birthdate, $
 }
 function read_user($username = null)
 {
-	/*
-	$user_data = isset($_COOKIE['user']) ? $_COOKIE['user'] : $_SESSION['user'];
-	return unserialize($user_data);
-	*/
-
 	// create database file if there is none
 	$path = "database/users.db";
 	if (!file_exists($path)) {
@@ -44,8 +39,8 @@ function read_user($username = null)
 
 	if (isset($username)) {
 		if (isset($users[$username])) {
-			// return the expected user
-			return $users[$username];
+			// append username to userdata and retirn the whole
+			return [...$users[$username], "username" => $username];
 		} else {
 			// expected user doesnt exist
 			return false;
