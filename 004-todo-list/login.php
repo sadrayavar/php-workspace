@@ -3,9 +3,9 @@ include('includes/init.php');
 
 if (isset($_SESSION['user']) || isset($_COOKIE['user'])) {
     // get username and password from session or cookie
-    $saved_credentials = unserialize(isset($_SESSION['user']) ? $_SESSION['user'] : $_COOKIE['user']);
-    $username = $saved_credentials['username'];
-    $password = $saved_credentials['password'];
+    $saved_user = unserialize(isset($_SESSION['user']) ? $_SESSION['user'] : $_COOKIE['user']);
+    $username = $saved_user['username'];
+    $password = $saved_user['password'];
 } else if (isset($_POST['login_pushed'])) {
     // get username and password from form
     $username = $_POST['username'];
@@ -14,17 +14,23 @@ if (isset($_SESSION['user']) || isset($_COOKIE['user'])) {
 
 // check credentials
 if (isset($username)) {
-    $credential_ok = is_credential_ok($username, $password);
+    $credential_correct = check_credentials($username, $password);
 }
 
 // procede if credentials are correct
-if (isset($credential_ok) && $credential_ok) {
-    if (isset($_GET['remember'])) {
-        // set cookies
+$this_user;
+if (isset($credential_correct) && $credential_correct) {
+
+    // current user data
+    $this_user = read_user($username);
+    $this_user['username'] = $username;
+
+    if (isset($_POST['remember'])) {
+        // save user data in cookies
         $one_week_from_now = time() + (1 * 24 * 60 * 60);
         setcookie('user', serialize($this_user), $one_week_from_now);
     } else {
-        // set session
+        // save user data in session
         $_SESSION['user'] = serialize($this_user);
     }
 
@@ -46,7 +52,7 @@ if (isset($credential_ok) && $credential_ok) {
 <body>
     <div class="login-container">
         <img src="images/daneshjooyar-logo.svg" class="login-logo" alt="Daneshjooyar" width="145" height="59">
-        <?php if (isset($credential_ok) && !$credential_ok): ?>
+        <?php if (isset($credential_correct) && !$credential_correct): ?>
             <div class="message error">
                 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none">
                     <path d="m14 16.16-3.96-3.96M13.96 12.24 10 16.2M10 6h4c2 0 2-1 2-2 0-2-1-2-2-2h-4C9 2 8 2 8 4s1 2 2 2Z" stroke="#FF8A65" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path>
@@ -75,7 +81,7 @@ if (isset($credential_ok) && $credential_ok) {
             </div>
             <button name="login_pushed" class="btn btn-primary">ورود به حساب کاربری</button>
         </form>
-        <?php if (isset($credential_ok) && $credential_ok): ?>
+        <?php if (isset($credential_correct) && $credential_correct): ?>
             شما با موفقیت وارد شدید!
         <?php endif; ?>
     </div><!--.login-container-->

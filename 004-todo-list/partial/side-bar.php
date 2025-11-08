@@ -1,5 +1,5 @@
 <?php
-$user_data = read_user();
+$user_data = this_user();
 ?>
 <aside class="sidebar">
 	<a href="https://dnjy.ir/php" class="panel-logo align-center">
