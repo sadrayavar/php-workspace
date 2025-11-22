@@ -75,8 +75,8 @@ function this_user()
 {
 	if (isset($_SESSION['user']) || isset($_COOKIE['user'])) {
 		// get username and password from session or cookie
-		$saved_user = unserialize(isset($_SESSION['user']) ? $_SESSION['user'] : $_COOKIE['user']);
+		$current_user = unserialize(isset($_SESSION['user']) ? $_SESSION['user'] : $_COOKIE['user']);
 	}
 
-	return read_user($saved_user['username']);
+	return read_user($current_user['username']);
 }

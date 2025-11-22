@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * CRUD FUNCTIONS
+ */
 function create_uid()
 {
 	// read uid
@@ -36,6 +39,10 @@ function read_uid()
 }
 function update_uid() {}
 function delete_uid() {}
+
+/**
+ * MISC FUNCTIONS
+ */
 
 function generate_uid()
 {

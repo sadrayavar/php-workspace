@@ -18,20 +18,18 @@ if (isset($username)) {
 }
 
 // procede if credentials are correct
-$this_user;
 if (isset($credential_correct) && $credential_correct) {
 
     // current user data
-    $this_user = read_user($username);
-    $this_user['username'] = $username;
+    $loggined_user = read_user($username);
 
     if (isset($_POST['remember'])) {
         // save user data in cookies
         $one_week_from_now = time() + (1 * 24 * 60 * 60);
-        setcookie('user', serialize($this_user), $one_week_from_now);
+        setcookie('user', serialize($loggined_user), $one_week_from_now);
     } else {
         // save user data in session
-        $_SESSION['user'] = serialize($this_user);
+        $_SESSION['user'] = serialize($loggined_user);
     }
 
     // redirect to index page

@@ -6,7 +6,7 @@ $user_data = this_user();
 		<img src="images/logo-light.svg" class="login-logo" alt="Daneshjooyar" width="145" height="59">
 	</a>
 	<div class="profile align-center">
-		<img src="<?php echo $user_data['avatar'] ?>" alt="Hamed" width="256" height="256">
+		<img src="<?php echo $user_data['avatar'] ?>" alt="<?php echo this_user()['username'] ?>" width="256" height="256">
 		<p class="user-full-name">
 			<?php echo $user_data['name'] ?>
 		</p>
