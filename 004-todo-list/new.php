@@ -1,7 +1,5 @@
 <?php include("partial/header.php") ?>
-<?php include("partial/side-bar.php") ?>
 <?php
-
 $error = false;
 $edit_successfull = false;
 
@@ -15,12 +13,10 @@ if (isset($_POST['save_task'])) {
     ];
 
     create_task(...$task_data);
-    // redirect($_GET["source"] ?? "tasklist.php");
+    redirect($_GET["source"] ?? "tasklist.php");
 }
-
-
-
 ?>
+<?php include("partial/side-bar.php") ?>
 <main>
     <h1>ثبت کار جدید</h1>
     <?php if ($error): ?>

@@ -9,10 +9,19 @@ function create_task($title, $status, $progress, $date)
 	// add task
 	$tasks[create_uid()] = [
 		'title' => $title,
+		'create_time' => time(),
 		'status' => $status,
 		'progress' => $progress,
 		'date' => $date,
 	];
+
+	// sort tasks by the date they made
+	usort(
+		$tasks,
+		function ($arr, $usort) {
+			return $usort['create_time'] <=> $arr['create_time'];
+		}
+	);
 
 	// write tasks
 	$path = get_task_file_path();
@@ -67,4 +76,11 @@ function create_task_file($path)
 
 	// create file
 	return file_put_contents($path, serialize([]));
+}
+function remaining_days($datetime)
+{
+	$date_timestamp = strtotime($datetime);
+	$diff = $date_timestamp - time(); // in seconds
+	$days_left = $diff / 60 / 60 / 24;
+	return $days_left;
 }
