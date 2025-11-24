@@ -1,8 +1,8 @@
 <?php include('partial/header.php') ?>
 <?php
-if (isset($_GET['action']) && $_GET['action'] === "delete") {
-    delete_task($_GET['id']);
-    redirect('tasklist.php');
+if (isset($_POST['delete-task'])) {
+    delete_task($_POST['id']);
+    redirect($_POST['source'] ?? 'tasklist.php');
 }
 ?>
 <?php include("partial/side-bar.php") ?>

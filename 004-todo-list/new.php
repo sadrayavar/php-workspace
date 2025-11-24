@@ -27,10 +27,14 @@ if (isset($_POST['save_task']) || isset($_POST['save-edited-task'])) {
         }
     } elseif (isset($_POST['save_task'])) {
         // create task
-        create_task(...$task_data);
+        if (create_task(...$task_data)) {
+            $edit_successfull = true;
 
-        // redirect user to where they came from
-        redirect($_REQUEST["source"] ?? "tasklist.php");
+            // redirect user to where they came from
+            redirect($_REQUEST["source"] ?? "tasklist.php");
+        }else{
+            $error = true;
+        }
     }
 }
 
@@ -45,7 +49,7 @@ if (isset($_POST['save_task']) || isset($_POST['save-edited-task'])) {
                 <path d="M16 4.02c3.33.18 5 1.41 5 5.98v6c0 4-1 6-6 6H9c-5 0-6-2-6-6v-6c0-4.56 1.67-5.8 5-5.98" stroke="#FF8A65" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path>
             </svg>
             <p>
-                خطا در ثبت یا ویرایش کار
+                نام وظیفه باید حداقل 3 حرف بوده و ساختار تاریخ استاندارد باشد.
             </p>
         </div><!--.message-->
     <?php endif; ?>

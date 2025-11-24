@@ -3,6 +3,11 @@
 // CRUD
 function create_task($title, $status, $progress, $date)
 {
+	// check received data
+	if (!check_data($title, $date)) {
+		return false;
+	}
+
 	// read tasks
 	$tasks = read_task();
 
@@ -60,6 +65,11 @@ function read_task($uid = null)
 }
 function update_task($uid, $title, $status, $progress, $date)
 {
+	// check received data
+	if (!check_data($title, $date)) {
+		return false;
+	}
+
 	$tasks = read_task();
 	for ($i = 0; $i < count($tasks); $i++) {
 		if ($tasks[$i]['id'] === $uid) {
@@ -129,4 +139,13 @@ function get_tasks_status()
 	}
 
 	return $status;
+}
+function check_data($title, $date)
+{
+	$cond1 = strlen($title) < 3;
+	$cond2 = !is_numeric(strtotime($date));
+	if ($cond1 || $cond2) {
+		return false;
+	}
+	return true;
 }
