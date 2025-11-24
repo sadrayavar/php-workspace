@@ -3,8 +3,14 @@
 $error = false;
 $edit_successfull = false;
 
-// get task data from form
-if (isset($_POST['save_task'])) {
+if (isset($_POST['edit-task'])) {
+    // populate form with the data of task intended to edit (if it's intended)
+    $task_data = read_task($_POST['id']);
+}
+
+
+if (isset($_POST['save_task']) || isset($_POST['save-edited-task'])) {
+    // get task data from form to create a new task
     $task_data = [
         "title" => $_POST["title"],
         "status" => $_POST["status"],
@@ -12,9 +18,22 @@ if (isset($_POST['save_task'])) {
         "date" => $_POST["date"],
     ];
 
-    create_task(...$task_data);
-    redirect($_GET["source"] ?? "tasklist.php");
+    if (isset($_POST['save-edited-task'])) {
+        // edit task
+        if (update_task($_POST['id'], ...$task_data)) {
+            $edit_successfull = true;
+        } else {
+            $error = true;
+        }
+    } elseif (isset($_POST['save_task'])) {
+        // create task
+        create_task(...$task_data);
+
+        // redirect user to where they came from
+        redirect($_REQUEST["source"] ?? "tasklist.php");
+    }
 }
+
 ?>
 <?php include("partial/side-bar.php") ?>
 <main>
@@ -75,8 +94,11 @@ if (isset($_POST['save_task'])) {
                 <input type="text" min="0" max="100" step="1" class="form-control date-field" id="date" name="date" value="<?php echo $task_data['date'] ?? "" ?>">
             </div>
         </div>
+        <?php if (isset($_POST['edit-task'])): ?>
+            <input type="hidden" name="id" value="<?php echo $_POST['id'] ?>">
+        <?php endif; ?>
         <div class="col col-12">
-            <button class="btn btn-primary" name="save_task">
+            <button class="btn btn-primary" name="<?php echo isset($_POST['edit-task']) ? "save-edited-task" : "save_task" ?>">
                 ذخیره کار
             </button>
         </div>

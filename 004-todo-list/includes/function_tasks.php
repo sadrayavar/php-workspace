@@ -7,13 +7,17 @@ function create_task($title, $status, $progress, $date)
 	$tasks = read_task();
 
 	// add task
-	$tasks[create_uid()] = [
-		'title' => $title,
-		'create_time' => time(),
-		'status' => $status,
-		'progress' => $progress,
-		'date' => $date,
-	];
+	array_unshift(
+		$tasks,
+		[
+			'title' => $title,
+			'create_time' => time(),
+			'status' => $status,
+			'progress' => $progress,
+			'date' => $date,
+			'id' => create_uid()
+		]
+	);
 
 	// sort tasks by the date they made
 	usort(
@@ -39,20 +43,47 @@ function read_task($uid = null)
 	$tasks = unserialize(file_get_contents($path));
 
 	if (isset($uid)) {
-		if (isset($tasks[$uid])) {
-			// return the expected task
-			return $tasks[$uid];
-		} else {
-			// expected task doesnt exist
-			return false;
+		// search for task
+		for ($i = 0; $i < count($tasks); $i++) {
+			$task = $tasks[$i];
+			if ($task['id'] === $uid) {
+				// return the expected task
+				return $task;
+			}
 		}
+		// task doesn't exist
+		return false;
 	} else {
 		// return all tasks of this user
 		return $tasks;
 	}
 }
-function update_task() {}
-function delete_task() {}
+function update_task($uid, $title, $status, $progress, $date)
+{
+	$tasks = read_task();
+	for ($i = 0; $i < count($tasks); $i++) {
+		if ($tasks[$i]['id'] === $uid) {
+			$tasks[$i]['title'] = $title;
+			$tasks[$i]['status'] = $status;
+			$tasks[$i]['progress'] = $progress;
+			$tasks[$i]['date'] = $date;
+
+			$path = get_task_file_path();
+			return file_put_contents($path, serialize($tasks));
+		}
+	}
+
+	// for some reason, given uid was not in the database
+	return false;
+}
+function delete_task($uid)
+{
+	$tasks = read_task();
+	$tasks = array_filter($tasks, fn($task) => $task['id'] !== $uid);
+
+	$path = get_task_file_path();
+	return file_put_contents($path, serialize($tasks));
+}
 
 // misc
 function get_task_file_path()
