@@ -115,3 +115,18 @@ function remaining_days($datetime)
 	$days_left = $diff / 60 / 60 / 24;
 	return $days_left;
 }
+function get_tasks_status()
+{
+	$status = [
+		'queue' => 0,
+		'doing' => 0,
+		'done' => 0,
+		'expire' => 0,
+	];
+
+	foreach (read_task() as $task) {
+		$status[$task['status']]++;
+	}
+
+	return $status;
+}

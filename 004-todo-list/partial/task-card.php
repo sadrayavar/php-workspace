@@ -52,7 +52,7 @@ $source = $source[count($source) - 1];
 				<?php echo $task['status'] === "expire" ? "از دست رفته" : "" ?>
 			</div>
 		</div>
-		<form method="post">
+		<form action="tasklist.php" method="post">
 			<input type="hidden" name="source" value="<?php echo $source ?>">
 			<input type="hidden" name="id" value="<?php echo $task['id'] ?>">
 			<button name="delete-task" style="border: hidden;cursor: pointer;background: transparent;" class="task-delete" onclick="return confirm('آیا از حذف  وظیفه <?php echo $task['title'] ?> مطمئنید؟')">

@@ -91,7 +91,7 @@ if (isset($_POST['save_task']) || isset($_POST['save-edited-task'])) {
         <div class="col col-4">
             <div class="form-group">
                 <label for="date">مهلت زمانی</label>
-                <input type="text" min="0" max="100" step="1" class="form-control date-field" id="date" name="date" value="<?php echo $task_data['date'] ?? "" ?>">
+                <input type="text" class="form-control date-field" id="date" name="date" value="<?php echo $task_data['date'] ?? "" ?>">
             </div>
         </div>
         <?php if (isset($_POST['edit-task'])): ?>
@@ -104,14 +104,16 @@ if (isset($_POST['save_task']) || isset($_POST['save-edited-task'])) {
         </div>
     </form>
 
-    <!--<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-<script>
-    flatpickr(".date-field", {
-        enableTime  : true,
-        dateFormat  : "Y-m-d H:i:s",
-    });
-</script>-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+    <script>
+        const fp = flatpickr(".date-field", {
+            enableTime: true,
+            dateFormat: "Y-m-d H:i:s",
+            minDate: "today",
+        }); // flatpickr
+    </script>
 
 </main>
 <?php include('partial/footer.php') ?>
