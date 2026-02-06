@@ -27,3 +27,11 @@ ALTER TABLE products ADD COLUMN `thumbnail` VARCHAR(250);
 
 ALTER TABLE products MODIFY `created_at` DATETIME;
 ALTER TABLE products MODIFY `updated_at` DATETIME;
+
+alter table products add column discount decimal(5,2) NOT NULL DEFAULT ((base_price - sale_price) / base_price * 100);
+
+alter table products modify column state enum('draft','publish','pending','expire','deleted','selling','stopped','presale') NOT NULL DEFAULT 'draft';
+update products set state='publish' where state='selling';
+update products set state='pending' where state='presale';
+update products set state='expire' where state='stopped';
+alter table products modify column state enum('draft','publish','pending','expire','deleted') NOT NULL DEFAULT 'draft'
