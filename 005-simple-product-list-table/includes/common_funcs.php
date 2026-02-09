@@ -26,3 +26,9 @@ function redirect($url)
 	header("Location: $url");
 	exit;
 }
+
+function save_log($message)
+{
+	$log =  date('Y-m-d H:i:s | ', time()) . $message . PHP_EOL;
+	file_put_contents('logs.txt', $log, FILE_APPEND);
+}

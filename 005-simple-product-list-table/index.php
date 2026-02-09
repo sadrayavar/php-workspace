@@ -80,7 +80,7 @@ $total_pages = ceil($total_product_number / PER_PAGE);
     </tr>
   </thead>
   <tbody>
-    <?php if ($products = read_product($current_page, "sale_price", "asc")): ?>
+    <?php if ($products = read_products($current_page, "sale_price", "asc")): ?>
       <?php $index = ($current_page - 1) * PER_PAGE ?>
       <?php foreach ($products as $product): ?>
         <tr>
@@ -156,7 +156,7 @@ $total_pages = ceil($total_product_number / PER_PAGE);
   </div>
   <div class="pagination">
 
-    <?php if ($current_page > 2): ?>
+    <?php if ($current_page > 1): ?>
       <a href="<?php echo generate_querystring(['page' => $current_page - 1]) ?>" class="prev">
         <svg xmlns="http://www.w3.org/2000/svg" width="8.597" height="17.337" viewBox="0 0 8.597 17.337">
           <path id="arrow-right-3" d="M16.012,20.67a.742.742,0,0,0,.53-.22.754.754,0,0,0,0-1.06l-6.52-6.52a1.231,1.231,0,0,1,0-1.74l6.52-6.52a.75.75,0,0,0-1.06-1.06l-6.52,6.52a2.724,2.724,0,0,0-.8,1.93,2.683,2.683,0,0,0,.8,1.93l6.52,6.52A.786.786,0,0,0,16.012,20.67Z" transform="translate(-8.162 -3.333)" fill="#292d32" />
