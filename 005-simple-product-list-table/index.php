@@ -81,7 +81,7 @@ $total_pages = ceil($total_product_number / PER_PAGE);
   </thead>
   <tbody>
     <?php if ($products = read_product($current_page, "sale_price", "asc")): ?>
-      <?php $index = 0 ?>
+      <?php $index = ($current_page - 1) * PER_PAGE ?>
       <?php foreach ($products as $product): ?>
         <tr>
           <?php $index++ ?>
@@ -155,14 +155,17 @@ $total_pages = ceil($total_product_number / PER_PAGE);
     کل نتایج: <?php echo $total_product_number ?> | صفحه <?php echo $current_page ?> از <?php echo $total_pages ?>
   </div>
   <div class="pagination">
-    <a href="#" class="prev">
-      <svg xmlns="http://www.w3.org/2000/svg" width="8.597" height="17.337" viewBox="0 0 8.597 17.337">
-        <path id="arrow-right-3" d="M16.012,20.67a.742.742,0,0,0,.53-.22.754.754,0,0,0,0-1.06l-6.52-6.52a1.231,1.231,0,0,1,0-1.74l6.52-6.52a.75.75,0,0,0-1.06-1.06l-6.52,6.52a2.724,2.724,0,0,0-.8,1.93,2.683,2.683,0,0,0,.8,1.93l6.52,6.52A.786.786,0,0,0,16.012,20.67Z" transform="translate(-8.162 -3.333)" fill="#292d32" />
-      </svg>
-    </a>
+
+    <?php if ($current_page > 2): ?>
+      <a href="<?php echo generate_querystring(['page' => $current_page - 1]) ?>" class="prev">
+        <svg xmlns="http://www.w3.org/2000/svg" width="8.597" height="17.337" viewBox="0 0 8.597 17.337">
+          <path id="arrow-right-3" d="M16.012,20.67a.742.742,0,0,0,.53-.22.754.754,0,0,0,0-1.06l-6.52-6.52a1.231,1.231,0,0,1,0-1.74l6.52-6.52a.75.75,0,0,0-1.06-1.06l-6.52,6.52a2.724,2.724,0,0,0-.8,1.93,2.683,2.683,0,0,0,.8,1.93l6.52,6.52A.786.786,0,0,0,16.012,20.67Z" transform="translate(-8.162 -3.333)" fill="#292d32" />
+        </svg>
+      </a>
+    <?php endif; ?>
 
     <?php if ($current_page > 1): ?>
-      <a href="#">1</a>
+      <a href="<?php echo generate_querystring(['page' => '1']) ?>">1</a>
     <?php endif; ?>
 
     <?php if ($current_page > 3): ?>
@@ -170,13 +173,13 @@ $total_pages = ceil($total_product_number / PER_PAGE);
     <?php endif; ?>
 
     <?php if ($current_page > 2): ?>
-      <a href="#"><?php echo $current_page - 1 ?></a>
+      <a href="<?php echo generate_querystring(['page' => $current_page - 1]) ?>"><?php echo $current_page - 1 ?></a>
     <?php endif; ?>
 
     <span><?php echo $current_page ?></span>
 
     <?php if ($current_page < $total_pages): ?>
-      <a href="#"><?php echo $current_page + 1 ?></a>
+      <a href="<?php echo generate_querystring(['page' => $current_page + 1]) ?>"><?php echo $current_page + 1 ?></a>
     <?php endif; ?>
 
     <?php if ($current_page < $total_pages - 2): ?>
@@ -184,14 +187,16 @@ $total_pages = ceil($total_product_number / PER_PAGE);
     <?php endif; ?>
 
     <?php if ($current_page < $total_pages - 1): ?>
-      <a href="#"><?php echo $total_pages ?></a>
+      <a href="<?php echo generate_querystring(['page' => $total_pages]) ?>"><?php echo $total_pages ?></a>
     <?php endif; ?>
 
-    <a href="#" class="next">
-      <svg xmlns="http://www.w3.org/2000/svg" width="8.597" height="17.337" viewBox="0 0 8.597 17.337">
-        <path id="arrow-right-3" d="M8.91,20.67a.742.742,0,0,1-.53-.22.754.754,0,0,1,0-1.06l6.52-6.52a1.231,1.231,0,0,0,0-1.74L8.38,4.61A.75.75,0,1,1,9.44,3.55l6.52,6.52a2.724,2.724,0,0,1,.8,1.93,2.683,2.683,0,0,1-.8,1.93L9.44,20.45A.786.786,0,0,1,8.91,20.67Z" transform="translate(-8.162 -3.333)" fill="#292d32" />
-      </svg>
-    </a>
+    <?php if ($current_page < $total_pages): ?>
+      <a href="<?php echo generate_querystring(['page' => $current_page + 1]) ?>" class="next">
+        <svg xmlns="http://www.w3.org/2000/svg" width="8.597" height="17.337" viewBox="0 0 8.597 17.337">
+          <path id="arrow-right-3" d="M8.91,20.67a.742.742,0,0,1-.53-.22.754.754,0,0,1,0-1.06l6.52-6.52a1.231,1.231,0,0,0,0-1.74L8.38,4.61A.75.75,0,1,1,9.44,3.55l6.52,6.52a2.724,2.724,0,0,1,.8,1.93,2.683,2.683,0,0,1-.8,1.93L9.44,20.45A.786.786,0,0,1,8.91,20.67Z" transform="translate(-8.162 -3.333)" fill="#292d32" />
+        </svg>
+      </a>
+    <?php endif; ?>
   </div><!--.pagination-->
 </div><!--.table-footer-->
 

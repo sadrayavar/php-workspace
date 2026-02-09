@@ -7,6 +7,9 @@ $on_home_page = ($page === "index.php" || $page === "");
 // configurations
 include_once("confs.php");
 
+// include commonly used functions
+include_once("common_funcs.php");
+
 // session
 session_start();
 
