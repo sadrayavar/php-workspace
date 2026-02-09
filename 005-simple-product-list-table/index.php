@@ -1,6 +1,6 @@
-<?php include "includes/header.php"; ?>
+<?php include "partials/header.php"; ?>
 <?php
-$current_page = $_GET['page'] ? (int) $_GET['page'] : 1;
+$current_page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
 $total_product_number = total_product_num();
 $total_pages = ceil($total_product_number / PER_PAGE);
 ?>
@@ -160,9 +160,6 @@ $total_pages = ceil($total_product_number / PER_PAGE);
         <path id="arrow-right-3" d="M16.012,20.67a.742.742,0,0,0,.53-.22.754.754,0,0,0,0-1.06l-6.52-6.52a1.231,1.231,0,0,1,0-1.74l6.52-6.52a.75.75,0,0,0-1.06-1.06l-6.52,6.52a2.724,2.724,0,0,0-.8,1.93,2.683,2.683,0,0,0,.8,1.93l6.52,6.52A.786.786,0,0,0,16.012,20.67Z" transform="translate(-8.162 -3.333)" fill="#292d32" />
       </svg>
     </a>
-    <?php
-
-    ?>
 
     <?php if ($current_page > 1): ?>
       <a href="#">1</a>
@@ -198,4 +195,4 @@ $total_pages = ceil($total_product_number / PER_PAGE);
   </div><!--.pagination-->
 </div><!--.table-footer-->
 
-<?php include "includes/footer.php"; ?>
+<?php include "partials/footer.php"; ?>

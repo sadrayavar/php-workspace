@@ -1,4 +1,4 @@
-<?php include "includes/header.php"; ?>
+<?php include "partials/header.php"; ?>
 
 <div class="message error">
     نام محصول تکراری می باشد
@@ -50,4 +50,4 @@
     </div>
 </form>
 
-<?php include "includes/footer.php"; ?>
+<?php include "partials/footer.php"; ?>
