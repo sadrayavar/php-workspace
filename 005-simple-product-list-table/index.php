@@ -1,4 +1,8 @@
 <?php include "includes/header.php"; ?>
+<?php
+$current_page = $_GET['page'] ? (int) $_GET['page'] : 1;
+$total_product_number = total_product_num();
+?>
 
 <div class="table-filter">
   <div class="filter">
@@ -75,7 +79,7 @@
     </tr>
   </thead>
   <tbody>
-    <?php if ($products = read_product(1, "sale_price", "asc")): ?>
+    <?php if ($products = read_product($current_page, "sale_price", "asc")): ?>
       <?php $index = 0 ?>
       <?php foreach ($products as $product): ?>
         <tr>
@@ -147,7 +151,7 @@
 
 <div class="table-footer">
   <div class="result">
-    کل نتایج: 23,623 | صفحه 5 از 36
+    کل نتایج: <?php echo $total_product_number ?> | صفحه <?php echo $current_page ?> از <?php echo ceil($total_product_number / PER_PAGE) ?>
   </div>
   <div class="pagination">
     <a href="#" class="prev">

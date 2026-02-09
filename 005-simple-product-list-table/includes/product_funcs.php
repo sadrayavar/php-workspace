@@ -6,12 +6,12 @@ function cnn()
 	return $cnn;
 }
 
-function read_product($page = null, $sort = null, $sort_dir = null, $id = null)
+function read_product($page = null, $sort = null, $sort_dir = null, $id = null, $total = false)
 {
 	if ($id !== null) {
 		// return single product
 		if (is_nan($id)) $is_attack = die("bad bad bad!");
-		$query = "SELECT * FROM products WHERE id=$id";
+		$query = "SELECT * FROM products WHERE id=$id AND `state`<>'deleted'";
 	} else {
 		// return all (pagination)
 		$is_attack = false;
@@ -22,7 +22,7 @@ function read_product($page = null, $sort = null, $sort_dir = null, $id = null)
 
 		$sort_clause = "ORDER BY $sort $sort_dir";
 		$paginate_clause = "LIMIT " . PER_PAGE . " OFFSET " . ($page - 1) * PER_PAGE;
-		$query = "SELECT * FROM products $sort_clause $paginate_clause";
+		$query = "SELECT * FROM products WHERE `state`<>'deleted' $sort_clause $paginate_clause";
 	}
 
 	$results = @mysqli_query(cnn(), $query);
@@ -30,4 +30,13 @@ function read_product($page = null, $sort = null, $sort_dir = null, $id = null)
 	$records = @mysqli_fetch_all($results, MYSQLI_ASSOC);
 	mysqli_free_result($results);
 	return $records;
+}
+
+function total_product_num()
+{
+	$query = "SELECT COUNT(*) AS total_num FROM products WHERE `state`<>'deleted'";
+	$results = @mysqli_query(cnn(), $query);
+	$records = @mysqli_fetch_all($results, MYSQLI_ASSOC);
+	mysqli_free_result($results);
+	return (int) $records[0]['total_num'];
 }
