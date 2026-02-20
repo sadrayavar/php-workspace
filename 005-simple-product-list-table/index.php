@@ -147,7 +147,7 @@ $total_pages = ceil($total_product_number / PER_PAGE);
               ?>
             </div>
           </td>
-          <td><?php echo $product['created_at'] ?></td>
+          <td><?php echo my_to_jalali($product['created_at']) ?></td>
           <td>
             <div class="table-flex-col">
               <a href="product-edit.php<?php echo generate_querystring(["product_title" => $product["title"]]) ?>" class="btn-icon edit-product">

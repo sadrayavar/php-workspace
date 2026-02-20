@@ -85,3 +85,12 @@ function error_translate($message)
 			}
 	}
 }
+
+function my_to_jalali($gregorian_date)
+{
+	$year = (int) substr($gregorian_date, 0, 4);
+	$month = (int) substr($gregorian_date, 5, 2);
+	$day = (int) substr($gregorian_date, 8, 2);
+
+	return gregorian_to_jalali($year, $month, $day, "/");
+}
