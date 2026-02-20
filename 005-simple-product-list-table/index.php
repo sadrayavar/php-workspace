@@ -6,41 +6,57 @@ if (isset($_GET['delete_product'])) {
   redirect("./" . generate_querystring(['delete_product' => null]));
 }
 
+// values needed for footer
 $current_page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
-$total_product_number = total_product_num();
+
+// receive filter arguments
+$filter = [];
+if (isset($_GET['filter'])) {
+  $filter = [
+    'title' => $_GET['title'],
+    'state' => $_GET['state'],
+    'min_price' => $_GET['min_price'],
+    'max_price' => $_GET['max_price']
+  ];
+}
+$read_result = read_products($current_page, $filter, sort: ["sale_price", "asc"]);
+
+// other values needed for footer
+$total_product_number = $read_result[0];
 $total_pages = ceil($total_product_number / PER_PAGE);
+
 ?>
 
-<div class="table-filter">
+<form action="" class="table-filter" method="get">
   <div class="filter">
-    <label for="search">جستجو</label>
-    <input type="search" id="search" name="search" placeholder="جستجو" value="" class="form-control">
+    <label for="title">جستجو</label>
+    <input type="search" id="title" name="title" placeholder="جستجو" value="<?php echo isset($_GET['title']) ? $_GET['title'] : "" ?>" class="form-control">
   </div>
   <div class="filter">
     <label for="state">وضعیت</label>
     <select name="state" id="state" class="form-control">
       <option value=""> - همه - </option>
-      <option value="publish">درحال فروش</option>
-      <option value="expire">توقف فروش</option>
-      <option value="draft">پیش نویس</option>
-      <option value="preslae">پیشفروش</option>
+      <option value="publish" <?php echo (isset($_GET['state']) && $_GET['state'] === 'publish') ? "selected" : "" ?>>درحال فروش</option>
+      <option value="expire" <?php echo (isset($_GET['state']) && $_GET['state'] === 'expire') ? "selected" : "" ?>>توقف فروش</option>
+      <option value="draft" <?php echo (isset($_GET['state']) && $_GET['state'] === 'draft') ? "selected" : "" ?>>پیش نویس</option>
+      <option value="pending" <?php echo (isset($_GET['state']) && $_GET['state'] === 'pending') ? "selected" : "" ?>>پیشفروش</option>
     </select>
   </div>
   <div class="filter filter-price">
     <label for="search">قیمت</label>
     <div>
       از
-      <input type="search" name="price_from" placeholder="از" value="" class="form-control">
+      <input type="search" name="min_price" placeholder="از" value="<?php echo isset($_GET['min_price']) ? $_GET['min_price'] : "" ?>" class="form-control">
       تا
-      <input type="search" name="price_to" placeholder="تا" value="" class="form-control">
+      <input type="search" name="max_price" placeholder="تا" value="<?php echo isset($_GET['max_price']) ? $_GET['max_price'] : "" ?>" class="form-control">
     </div>
   </div>
   <div class="filter btn-filter">
-    <button class="btn btn-primary ">
+    <button name="filter" class="btn btn-primary ">
       فیلتر کردن
     </button>
   </div>
-</div><!--.table-filter-->
+</form><!--.table-filter-->
 
 <table class="table">
   <thead>
@@ -86,9 +102,9 @@ $total_pages = ceil($total_product_number / PER_PAGE);
     </tr>
   </thead>
   <tbody>
-    <?php if ($products = read_products(page: $current_page, sort: ["sale_price", "asc"])): ?>
+    <?php if (count($read_result[1]) > 0): ?>
       <?php $index = ($current_page - 1) * PER_PAGE ?>
-      <?php foreach ($products as $product): ?>
+      <?php foreach ($read_result[1] as $product): ?>
         <tr>
           <?php $index++ ?>
           <td><?php echo $index ?></td>

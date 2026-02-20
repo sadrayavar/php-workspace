@@ -15,13 +15,13 @@ if (isset($_GET['operation_result'])) {
 // edit product (GET this page request)
 if (isset($_GET['product_title'])) {
     // fill inputs
-    $product_data = read_products(title: $_GET['product_title']);
-    if (count($product_data) === 1) {
-        $product_data = $product_data[0];
-    } else if (count($product_data) === 0) {
+    $read_results = read_products(1, filter: ['title' => $_GET['product_title']]);
+    if ($read_results[0] === 0) {
         $error_message = "محصول مورد نظر یافت نشد";
-    } else if (count($product_data) > 1) {
+    } else if ($read_results[0] > 1) {
         $error_message = "نام محصول تکراری می باشد";
+    } else {
+        $product_data = $read_results[1][0];
     }
 }
 
