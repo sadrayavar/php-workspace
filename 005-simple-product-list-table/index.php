@@ -6,6 +6,13 @@ if (isset($_GET['delete_product'])) {
   redirect("./" . generate_querystring(['delete_product' => null]));
 }
 
+// sorting logic
+$sort = ["sale_price", "asc"];
+if (isset($_GET['sort'])) {
+  $sort = explode("_", $_GET['sort']);
+  if ($sort[0] === "sale") $sort[0] = "sale_price";
+}
+
 // values needed for footer
 $current_page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
 
@@ -19,7 +26,7 @@ if (isset($_GET['filter'])) {
     'max_price' => $_GET['max_price']
   ];
 }
-$read_result = read_products($current_page, $filter, sort: ["sale_price", "asc"]);
+$read_result = read_products($current_page, $filter, $sort);
 
 // other values needed for footer
 $total_product_number = $read_result[0];
@@ -63,7 +70,7 @@ $total_pages = ceil($total_product_number / PER_PAGE);
     <tr>
       <th>#</th>
       <th>
-        <a href="#" class="order-desc">
+        <a href="<?php echo generate_querystring(['sort' => ("title_" . (isset($_GET['sort']) && ($_GET['sort'] === "title_asc") ? ("desc") : "asc"))]) ?>" class="<?php echo $sort[0] === "title" ? "order-$sort[1]" : "" ?>">
           <svg xmlns="http://www.w3.org/2000/svg" width="17.505" height="18.5" viewBox="0 0 17.505 18.5">
             <g id="arrow-swap" transform="translate(-3.252 -2.75)">
               <path id="Path_15" data-name="Path 15" d="M-943.99-509.75h-.02a.739.739,0,0,1-.511-.219l-5.01-5.01a.755.755,0,0,1,0-1.06.755.755,0,0,1,1.06,0l3.73,3.731V-527.5a.754.754,0,0,1,.75-.75.754.754,0,0,1,.75.75v17a.736.736,0,0,1-.06.292.735.735,0,0,1-.159.238q-.025.023-.052.044a.744.744,0,0,1-.478.175Z" transform="translate(953 531)" fill="#c1c1c1" />
@@ -74,8 +81,8 @@ $total_pages = ceil($total_product_number / PER_PAGE);
         </a>
       </th>
       <th>
-        <a href="#">
-          <svg xmlns="http://www.w3.org/2000/svg" width="17.505" height="18.5" viewBox="0 0 17.505 18.5">
+        <a href="<?php echo generate_querystring(['sort' => ("sale_" . (isset($_GET['sort']) && ($_GET['sort'] === "sale_asc") ? ("desc") : "asc"))]) ?>" class="<?php echo $sort[0] === "sale_price" ? "order-$sort[1]" : "" ?>">
+          <svg xmlns=" http://www.w3.org/2000/svg" width="17.505" height="18.5" viewBox="0 0 17.505 18.5">
             <g id="arrow-swap" transform="translate(-3.252 -2.75)">
               <path id="Path_15" data-name="Path 15" d="M-943.99-509.75h-.02a.739.739,0,0,1-.511-.219l-5.01-5.01a.755.755,0,0,1,0-1.06.755.755,0,0,1,1.06,0l3.73,3.731V-527.5a.754.754,0,0,1,.75-.75.754.754,0,0,1,.75.75v17a.736.736,0,0,1-.06.292.735.735,0,0,1-.159.238q-.025.023-.052.044a.744.744,0,0,1-.478.175Z" transform="translate(953 531)" fill="#c1c1c1" />
               <path id="Path_14" data-name="Path 14" d="M-949.748-510.5v-17a.755.755,0,0,1,.751-.75.735.735,0,0,1,.146.015.742.742,0,0,1,.393.205l5.01,5.01a.754.754,0,0,1,0,1.059.742.742,0,0,1-.53.22.742.742,0,0,1-.53-.22l-3.74-3.739v15.2a.749.749,0,0,1-.75.75A.756.756,0,0,1-949.748-510.5Z" transform="translate(963.988 531)" fill="#c1c1c1" />
@@ -85,7 +92,7 @@ $total_pages = ceil($total_product_number / PER_PAGE);
         </a>
       </th>
       <th>
-        <a href="#">
+        <a href="<?php echo generate_querystring(['sort' => ("discount_" . (isset($_GET['sort']) && ($_GET['sort'] === "discount_asc") ? ("desc") : "asc"))]) ?>" class="<?php echo $sort[0] === "discount" ? "order-$sort[1]" : "" ?>">
           <svg xmlns="http://www.w3.org/2000/svg" width="17.505" height="18.5" viewBox="0 0 17.505 18.5">
             <g id="arrow-swap" transform="translate(-3.252 -2.75)">
               <path id="Path_15" data-name="Path 15" d="M-943.99-509.75h-.02a.739.739,0,0,1-.511-.219l-5.01-5.01a.755.755,0,0,1,0-1.06.755.755,0,0,1,1.06,0l3.73,3.731V-527.5a.754.754,0,0,1,.75-.75.754.754,0,0,1,.75.75v17a.736.736,0,0,1-.06.292.735.735,0,0,1-.159.238q-.025.023-.052.044a.744.744,0,0,1-.478.175Z" transform="translate(953 531)" fill="#c1c1c1" />
