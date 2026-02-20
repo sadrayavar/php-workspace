@@ -35,3 +35,7 @@ update products set state='publish' where state='selling';
 update products set state='pending' where state='presale';
 update products set state='expire' where state='stopped';
 alter table products modify column state enum('draft','publish','pending','expire','deleted') NOT NULL DEFAULT 'draft'
+
+alter table products add column description text(500) default null;
+
+alter table products modify column title varchar(100) NOT NULL unique;

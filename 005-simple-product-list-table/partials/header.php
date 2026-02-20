@@ -9,7 +9,7 @@
 	<?php if ($on_home_page): ?>
 		<title>لیست محصولات</title>
 	<?php else: ?>
-		<title>ثبت/ویرایش محصول</title>
+		<title><?php echo $on_modify_page ? "ویرایش" : "ثبت" ?> محصول</title>
 	<?php endif; ?>
 
 	<link rel="stylesheet" href="https://dl.daneshjooyar.com/mvie/Moodi_Hamed/assets/css/font-yekanbakh-vf.css">
@@ -23,16 +23,20 @@
 				<?php if ($on_home_page): ?>
 					<h1>لیست محصولات</h1>
 				<?php else: ?>
-					<h1>ثبت/ویرایش محصول</h1>
-					<p>از این بخش میتوانید محصولات فعلی را ویرایش یا محصول جدید ثبت کنید</p>
+					<h1><?php echo $on_modify_page ? "ویرایش" : "ثبت" ?> محصول</h1>
+					<p>از این بخش میتوانید محصول <?php echo $on_modify_page ? "مدنظر را ویرایش" : "جدید ثبت" ?> کنید</p>
 				<?php endif; ?>
 			</div>
 
-			<?php if ($on_home_page): ?>
-				<div class="table-button">
-					<a href="#" class="btn btn-secondary">
+			<div class="table-button">
+				<?php if ($on_home_page): ?>
+					<a href="product-edit.php" class="btn btn-main">
 						+ ثبت محصول جدید
 					</a>
-				</div>
-			<?php endif; ?>
+				<?php else: ?>
+					<a href="<?php echo $_GET["source"] ?? $_SERVER['HTTP_REFERER'] ?>" class="btn btn-secondary">
+						بازگشت به صفحه مرجع
+					</a>
+				<?php endif; ?>
+			</div>
 		</header>
