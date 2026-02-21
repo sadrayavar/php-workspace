@@ -49,7 +49,7 @@ function upload_image_to_server($file_data)
 	if (!file_exists($image_directory)) mkdir($image_directory);
 
 	// rename image file
-	$file_format = explode("/", $file_data['type'])[1];
+	$file_format = pathinfo($file_data['name'])['extension'];
 	$file_name = (string) time() . "." . $file_format;
 
 	// move the image to image folder

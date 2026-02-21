@@ -75,9 +75,9 @@
     </tr>
   </thead>
   <tbody>
-    <?php if (count($read_result[1]) > 0): ?>
+    <?php if (count($read_results[1]) > 0): ?>
       <?php $index = ($current_page - 1) * PER_PAGE ?>
-      <?php foreach ($read_result[1] as $product): ?>
+      <?php foreach ($read_results[1] as $product): ?>
         <tr>
           <?php $index++ ?>
           <td><?php echo $index ?></td>
