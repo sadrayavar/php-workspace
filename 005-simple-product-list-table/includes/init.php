@@ -29,3 +29,6 @@ include_once("product_create.php");
 include_once("product_delete.php");
 include_once("product_read.php");
 include_once("product_update.php");
+
+// form processing
+include_once("form_process.php");

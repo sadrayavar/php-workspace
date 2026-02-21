@@ -1,38 +1,4 @@
 <?php include "partials/header.php"; ?>
-<?php
-// delete product
-if (isset($_GET['delete_product'])) {
-  delete_product($_GET['delete_product']);
-  redirect("./" . generate_querystring(['delete_product' => null]));
-}
-
-// sorting logic
-$sort = ["sale_price", "asc"];
-if (isset($_GET['sort'])) {
-  $sort = explode("_", $_GET['sort']);
-  if ($sort[0] === "sale") $sort[0] = "sale_price";
-}
-
-// values needed for footer
-$current_page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
-
-// receive filter arguments
-$filter = [];
-if (isset($_GET['filter'])) {
-  $filter = [
-    'title' => $_GET['title'],
-    'state' => $_GET['state'],
-    'min_price' => $_GET['min_price'],
-    'max_price' => $_GET['max_price']
-  ];
-}
-$read_result = read_products($current_page, $filter, $sort);
-
-// other values needed for footer
-$total_product_number = $read_result[0];
-$total_pages = ceil($total_product_number / PER_PAGE);
-
-?>
 
 <form action="" class="table-filter" method="get">
   <div class="filter">
