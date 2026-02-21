@@ -23,6 +23,10 @@ function create_prdouct($product_data)
 
 	// add user defined values to main query
 	foreach ($pd as $name => $value) {
+		// data clearing
+		$value = trim($value);
+		if (mb_strlen($value) < 3) return "$name length be at least 3 characters";
+
 		//create column names
 		$columns .= "$name, ";
 

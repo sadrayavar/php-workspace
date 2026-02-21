@@ -95,8 +95,9 @@ if ($on_home_page) {
 		$operation_result = ($on_modify_page) ? update_product($_POST) : create_prdouct($_POST);
 
 		// delete the saved image if operation failed
-		if (!$operation_result && isset($_POST['thumbnail'])) delete_image_on_server($_POST['thumbnail']);
-
+		if ($operation_result !== true && isset($_POST['thumbnail'])) {
+			delete_image_on_server($_POST['thumbnail']);
+		}
 		// return the results
 		if ($operation_result) {
 			$data_to_pass = [

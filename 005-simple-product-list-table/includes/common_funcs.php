@@ -83,6 +83,8 @@ function error_translate($message)
 				$temp = explode("'", $message);
 				return "نام $temp[1] قبلا استفاده شده است.";
 			}
+		default:
+			return "محصول دان زاتدان ثبت نشد.";
 	}
 }
 

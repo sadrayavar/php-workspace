@@ -23,6 +23,10 @@ function update_product($product_data)
 
 	// add user defined values
 	foreach ($pd as $name => $value) {
+		// data clearing
+		$value = trim($value);
+		if (mb_strlen($value) < 3) return "$name length be at least 3 characters";
+
 		//create values
 		if ($value === "") $value = "NULL";
 		else if (!is_numeric($value)) $value = "'$value'";
